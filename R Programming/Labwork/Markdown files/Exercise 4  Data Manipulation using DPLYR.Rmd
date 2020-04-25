@@ -1,0 +1,145 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Exercise 4. Data Manipulation using DPLYR
+
+<br>  
+
+<b>Estimated time: </b>  
+45 Minutes
+
+<b>What this exercise is about</b>  
+Perform the following operations using only the dplyr library. We will be reviewing the following operations: 
+
+* filter (and slice()) 
+* arrange() 
+* select() (and rename())
+* distinct() 
+* mutate() (and transmute()) 
+* summarise0 
+* sample_n() and sample_frac()  
+
+<b><br>
+Requirernents:</b> RStudio 
+```{r  echo=TRUE, results="hide"}
+library(dplyr)
+```
+
+<br>
+<b>  
+Solve the following problerns using R
+</b>
+
+Q1. Return rows of cars that have an mpg value greater than 20 and 6 cylinders?
+```{r}
+df <- mtcars
+filter(mtcars,mpg > 20 & cyl == 6)
+```
+<br>
+Q2.  Reorder the Data Frame by cyl first, then by descending wt?
+```{r}
+data_set <- arrange(.data = df,cyl, desc(wt))
+head(x = data_set,n = 10)
+```
+<br>
+Q3. Select the columns mpg and hp?
+```{r}
+data_set <- select(.data = df, mpg, hp)
+head(x = data_set,n = 10)
+```
+<br>
+Q4. Select the distinct values ot the gear column?
+```{r}
+distinct(.data = df, gear)
+```
+<br>
+Q5. Create a new column called "Performance" which is calculated by hp divided by wt?
+```{r}
+Performance <- df$hp/ df$wt
+df <- mutate(.data = df,Performance)
+```
+<br>
+Q6. What is the average mpg value for all the cars?
+```{r}
+summarise(.data = df,average = mean(mpg), n = n())
+```
+<br>
+Q7. Use pipe operators to get the mean hp value for cars With 6 cylirxiers?
+```{r}
+df %>% filter(cyl == 6) %>% summarise(average = mean(hp), n =n())
+```
+<br>
+Q8.Create two data frames?  
+<br>
+<table border =2 style="width:20%; text-align:center">
+        <tr>
+                <td>ID</td>
+                <td>Salary</td>
+        </tr>
+        <tr>
+                <td>1</td>
+                <td>1000</td>
+        </tr>
+        <tr>
+                <td>2</td>
+                <td>2000</td>
+        </tr>
+        <tr>
+                <td>3</td>
+                <td>3000</td>
+        </tr>
+        <tr>
+                <td>4</td>
+                <td>4000</td>
+        </tr>        
+</table>
+<br>
+<table border =2 style="width:20%; text-align:center">
+        <tr>
+                <td>ID</td>
+                <td>Bonus</td>
+        </tr>
+        <tr>
+                <td>1</td>
+                <td>200</td>
+        </tr>
+        <tr>
+                <td>2</td>
+                <td>300</td>
+        </tr>
+        <tr>
+                <td>3</td>
+                <td>500</td>
+        </tr>
+        <tr>
+                <td>4</td>
+                <td>700</td>
+        </tr>
+        <tr>
+                <td>6</td>
+                <td>800</td>
+        </tr>
+</table>
+```{r}
+sal <- data.frame(ID = 1:5, Salary = c(1000,2000,3000,4000,5000))
+bon <- data.frame(ID = c(1,2,3,4,6), Bonus = c(200,300,500,700,800))
+```
+<br>
+Q9. Write a code to idetify the ID who do not have salary?
+```{r}
+anti_join(x = bon,y = sal ,by = "ID")
+```
+<br>
+Q10. Write a code to idetify the ID who do not have bonus?
+```{r}
+anti_join(x = sal,y = bon ,by = "ID")
+```
+<br>
+Q11. Write a code to idetify the ID who have both salary and bonus?
+```{r}
+inner_join(x = sal,y = bon, by = "ID")
+```
+<br>

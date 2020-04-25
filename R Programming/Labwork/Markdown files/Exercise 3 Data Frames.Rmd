@@ -1,0 +1,114 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Exercise 3. Data Frames
+
+<br>  
+
+<b>Estimated time: </b>  
+45 Minutes
+
+<b>What this exercise is about</b>  
+For this exercise we will test your knowledge of data frames
+
+<b><br>
+Requirernents:</b> RStudio 
+<br>
+<b>  
+Solve the following problerns using R
+</b>
+
+Q1. Recreate the following datatrame by creating vectors and using the data-frame function?  
+<br>
+<table border =2 style="width:60%; text-align:center">
+        <th>
+                <td>Age</td>
+                <td>Weight</td>
+                <td>Sex</td>
+        </th>
+        <tr>
+                <td>Sam</td>
+                <td>22</td>
+                <td>150</td>
+                <td>M</td>
+        </tr>
+        <tr>
+                <td>Frank</td>
+                <td>25</td>
+                <td>160</td>
+                <td>K</td>
+        </tr>
+        <tr>
+                <td>Amy</td>
+                <td>26</td>
+                <td>120</td>
+                <td>F</td>
+        </tr>
+</table>
+```{r}
+name <- c("Sam","Frank","Amy")
+Age <- c(22,25,26)
+Weight <- c(150,160,120)
+Sex <- c("M","F","K")
+df <-data.frame(row.names = name,Age,Weight,Sex)
+df
+```
+<br>
+Q2. Check if mtcars is a dataframe using is.data.frame()?
+```{r}
+is.data.frame(df)
+```
+<br>
+Q3. Use as.data.frame() to convert a matrix into a dataframe?
+```{r}
+mat <- matrix(data = 1:25,nrow = 5,byrow = T)
+as.data.frame(mat)
+```
+<br>
+Q4. Set the built-in data frame mtcars as a variable df. We'll use this df variable for the rest of the exercises. 
+```{r}
+df <- mtcars
+```
+<br>
+Q5. Display the first 6 rows Of df?
+```{r}
+head(df)
+```
+<br>
+Q6. What is the average mpg value for all the cars?
+```{r}
+mean(df$mpg)
+```
+<br>
+Q7. Select the rows where all cars have 6 cylinders (cyl column)?
+```{r}
+df[df$cyl==6,]
+```
+<br>
+Q8. Select the columns am,gear, and cart?
+```{r}
+df[,c("am","gear","carb")]
+```
+<br>
+Q9. Create a new column called performance. which is calculated by hp/wt?
+```{r}
+df["Performance"] <- df$hp/df$wt
+```
+<br>
+Q10. Your performance column will have several decimal place precision. Figure out how to use round() (check help(round)) to reduce this accuracy to only 2 decimal places?
+```{r}
+df$Performance <- round(df$Performance,2)
+```
+<br>
+Q11. What is the average mpg for cars that have more than 100 hp AND a value Of more than 2.5?
+```{r}
+mean(subset(x = df, hp>100 & wt >2.5)$mpg)
+```
+<br>
+Q12. What is the mpg of the Hornet Sponabout?  
+```{r}
+df["Hornet Sportabout",]$mpg
+```
